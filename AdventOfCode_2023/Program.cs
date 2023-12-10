@@ -7,8 +7,11 @@ class Program
 	static void Main(string[] args)
 	{
 		string[] calibrationFile = ReadCalibrationDocument();
-		int[] dayOneValues = DayOne.ExtractIntegerCalibrationValues(calibrationFile);
 		
+		// Day One
+		string[] convertedValues = DayOne.ConvertStringifiedNumbers(calibrationFile);
+		int[] dayOneValues = DayOne.ExtractIntegerCalibrationValues(convertedValues);
 		Console.WriteLine($"Day One Calibration Values: {dayOneValues.Sum()}");
+		
 	}
 }
