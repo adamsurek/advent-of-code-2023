@@ -1,10 +1,14 @@
-﻿using AdventOfCode_2023.Day_One;
+﻿using static AdventOfCode_2023.Filesystem.FilesystemIO;
+using DaySpecific.Day_One;
 
 namespace AdventOfCode_2023;
 class Program
 {
 	static void Main(string[] args)
 	{
-		DayOne.RunDayOne();
+		string[] calibrationFile = ReadCalibrationDocument();
+		int[] dayOneValues = DayOne.ExtractIntegerCalibrationValues(calibrationFile);
+		
+		Console.WriteLine($"Day One Calibration Values: {dayOneValues.Sum()}");
 	}
 }
