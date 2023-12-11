@@ -6,12 +6,21 @@ class Program
 {
 	static void Main(string[] args)
 	{
-		string[] calibrationFile = ReadCalibrationDocument();
-		
 		// Day One
-		string[] convertedValues = DayOne.ConvertStringifiedNumbers(calibrationFile);
-		int[] dayOneValues = DayOne.ExtractIntegerCalibrationValues(convertedValues);
-		Console.WriteLine($"Day One Calibration Values: {dayOneValues.Sum()}");
+		string[] calibrationFile = ReadCalibrationDocument();
+		// string[] calibrationFile = new []
+		// {
+		// 	"two1nine",
+  //           "eightwothree",
+  //           "abcone2threexyz",
+  //           "xtwone3four",
+  //           "4nineeightseven2",
+  //           "zoneight234",
+  //           "7pqrstsixteen"
+		// };
 		
+		int[] dayOneValues = DayOne.ExtractIntegerCalibrationValues(calibrationFile);
+		Console.WriteLine($"Day One Calibration Values: {dayOneValues.Sum()}");
+
 	}
 }

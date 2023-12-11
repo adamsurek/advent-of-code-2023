@@ -1,52 +1,66 @@
-﻿namespace DaySpecific.Day_One;
+﻿using System.Reflection.Metadata;
+
+namespace DaySpecific.Day_One;
 
 public static class DayOne
 {
-	/// <summary>
-	/// Extracts all digit <c>Char</c> from an array of strings. Created for AoC day one.
-	/// </summary>
-	/// <param name="stringValues"><c>string[]</c> to extract values from</param>
-	/// <returns>An <c>int[]</c> that are the first and last digit characters in the given string array index</returns>
 	public static int[] ExtractIntegerCalibrationValues(string[] stringValues)
 	{
 		int[] calValues = new int[stringValues.Length];
 		
 		for (int x = 0; x < stringValues.Length; x++)
 		{
-			IList<char> intChars = stringValues[x].Where(Char.IsDigit).ToList();
-			char[] temp = { intChars[0], intChars[^1] };	
+			Console.WriteLine($"String: {stringValues[x]}");
+			List<(int index, char digitCharacter)> digitPositions = new ();
+			for (int y = 0; y < stringValues[x].Length; y++)
+			{
+				if (Char.IsDigit(stringValues[x][y]))
+				{
+					digitPositions.Add((y, stringValues[x][y]));
+				}
+			}
+			digitPositions.AddRange(FindStringifiedDigits(stringValues[x]));
+			digitPositions.Sort((x, y) => x.index.CompareTo(y.index));
+
+			char[] temp = { digitPositions.First().digitCharacter, digitPositions.Last().digitCharacter };
 			calValues[x] = int.Parse(new String(temp.ToArray()));
 		}
 
 		return calValues;
 	}
-	
-	public static string[] ConvertStringifiedNumbers(string[] fileContents)
+
+	private static List<(int, char)> FindStringifiedDigits(string line)
 	{
-		string[] updatedContents = new string[fileContents.Length];
-		Dictionary<string, string> stringNumberMap = new Dictionary<string, string>()
+		List<(int, char)> occurrences = new List<(int, char)>();
+		Dictionary<string, char> stringNumbers = new Dictionary<string, char>()
 		{
-			{ "zero", "0" },
-			{ "one", "1" },
-			{ "two", "2" },
-			{ "three", "3" },
-			{ "four", "4" },
-			{ "five", "5" },
-			{ "six", "6" },
-			{ "seven", "7" },
-			{ "eight", "8" },
-			{ "nine", "9" }
+			{ "one", '1' },
+			{ "two", '2' },
+			{ "three", '3' },
+			{ "four", '4' },
+			{ "five", '5' },
+			{ "six", '6' },
+			{ "seven", '7' },
+			{ "eight", '8' },
+			{ "nine", '9' }
 		};
 
-		for (int x = 0; x < fileContents.Length; x++)
+		foreach (KeyValuePair<string, char> element in stringNumbers)
 		{
-			foreach (KeyValuePair<string, string> element in stringNumberMap)
-			{
-				fileContents[x] = fileContents[x].Replace(element.Key, element.Value);
-			}
-			updatedContents[x] = fileContents[x];
-		}
+			int index = 0;
 
-		return updatedContents;
+			while (index <= line.Length)
+			{
+				index = line.ToLower().IndexOf(element.Key, index, StringComparison.Ordinal);
+				
+				if (index < 0)
+				{
+					break;
+				}
+				occurrences.Add((index, element.Value));
+				index++;
+			}
+		}
+		return occurrences;
 	}
 }
