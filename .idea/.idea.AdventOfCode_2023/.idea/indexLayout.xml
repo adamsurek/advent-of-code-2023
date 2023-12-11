@@ -5,6 +5,7 @@
     <explicitIncludes>
       <Path>.gitignore</Path>
       <Path>README.md</Path>
+      <Path>input</Path>
     </explicitIncludes>
     <explicitExcludes />
   </component>
