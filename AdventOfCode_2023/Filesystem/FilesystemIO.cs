@@ -8,10 +8,10 @@ public static class FilesystemIO
 	/// Reads all lines of the calibration document found in input folder
 	/// </summary>
 	/// <returns>Returns <c>string[]</c> containing all lines</returns>
-	public static string[] ReadCalibrationDocument()
+	public static string[] ReadFlatFile(string fileName)
 	{
 		string folder = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)!;
-		string filePath = Path.Combine(folder, @"input\CalibrationDoc");
+		string filePath = Path.Combine(folder, $@"input\{fileName}");
 		
 		return File.ReadAllLines(filePath);
 	}
